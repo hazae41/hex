@@ -1,4 +1,5 @@
 import { Nullable } from "libs/nullable/index.js"
+import { Radixable } from "libs/radixable/index.js"
 import { RawHexString } from "mods/rawhex/index.js"
 
 declare global {
@@ -130,12 +131,36 @@ export namespace ZeroHexString {
     return `0x${value}` as ZeroHexString<N>
   }
 
+  export function fromBigInt(value: bigint): ZeroHexString {
+    return `0x${value.toString(16)}` as ZeroHexString
+  }
+
+  export function fromNumber(value: number): ZeroHexString {
+    return `0x${value.toString(16)}` as ZeroHexString
+  }
+
+  export function fromRadix(value: Radixable<16>): ZeroHexString {
+    return `0x${value.toString(16)}` as ZeroHexString
+  }
+
   export function padStart<N extends number>(text: ZeroHexString<N>): ZeroHexString<N> {
-    return fromRawHex(RawHexString.padStart(RawHexString.fromZeroHex(text)))
+    return fromRawHex(RawHexString.padStart(toRawHex(text)))
   }
 
   export function padEnd<N extends number>(text: ZeroHexString<N>): ZeroHexString<N> {
-    return fromRawHex(RawHexString.padEnd(RawHexString.fromZeroHex(text)))
+    return fromRawHex(RawHexString.padEnd(toRawHex(text)))
+  }
+
+  export function toRawHex<N extends number>(value: ZeroHexString<N>): RawHexString<N> {
+    return value.slice(2) as RawHexString<N>
+  }
+
+  export function toBigInt(value: ZeroHexString): bigint {
+    return value.length === 2 ? 0n : BigInt(value)
+  }
+
+  export function toNumber(value: ZeroHexString): number {
+    return value.length === 2 ? 0 : Number(value)
   }
 
 }
