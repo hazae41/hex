@@ -21,8 +21,8 @@ function recover(signature: ZeroHexString<32>) {
   // just use signature like a normal string
 }
 
-const signatureString = prompt("Enter your signature")
-const signatureZeroHex = ZeroHexString.String.Length.asOrThrow(signatureString, 32)
+const raw = prompt("Enter your signature")
+const hex = ZeroHexString.String.Length.asOrThrow(raw, 32)
 
-recover(signatureZeroHex)
+recover(hex)
 ```
