@@ -26,9 +26,7 @@ export type RawHexString<N extends number = number> = number extends N
 
 export namespace RawHexString {
 
-  export type Unsafe<N extends number = number> = number extends N
-    ? string
-    : string & { readonly byteLength: N }
+  export type Unsafe = string
 
   export namespace String {
 

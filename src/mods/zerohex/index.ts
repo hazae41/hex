@@ -28,9 +28,7 @@ export type ZeroHexString<N extends number = number> = number extends N
 
 export namespace ZeroHexString {
 
-  export type Unsafe<N extends number = number> = number extends N
-    ? `0x${string}`
-    : `0x${string}` & { readonly byteLength: N }
+  export type Unsafe = `0x${string}`
 
   export namespace String {
 
