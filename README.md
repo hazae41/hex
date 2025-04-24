@@ -22,7 +22,7 @@ function recover(signature: ZeroHexString<32>) {
 }
 
 const raw = prompt("Enter your signature as zero-hex")
-const hex = ZeroHexString.String.Length.asOrThrow(raw, 32)
+const hex = ZeroHexString.String.Length.fromOrThrow(raw, 32)
 
 recover(hex)
 ```

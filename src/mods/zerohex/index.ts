@@ -36,13 +36,13 @@ export namespace ZeroHexString {
       return value as ZeroHexString
     }
 
-    export function asOrThrow(value: string): ZeroHexString {
+    export function fromOrThrow(value: string): ZeroHexString {
       if (!is(value))
         throw new ZeroHexStringError(value)
       return value
     }
 
-    export function asOrNull(value: string): Nullable<ZeroHexString> {
+    export function fromOrNull(value: string): Nullable<ZeroHexString> {
       if (!is(value))
         return
       return value
@@ -58,13 +58,13 @@ export namespace ZeroHexString {
         return value as ZeroHexString<N>
       }
 
-      export function asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
+      export function fromOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
         if (!is(value, byteLength))
           throw new ZeroHexStringError(value)
         return value
       }
 
-      export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<ZeroHexString<N>> {
+      export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<ZeroHexString<N>> {
         if (!is(value, byteLength))
           return
         return value
@@ -83,13 +83,13 @@ export namespace ZeroHexString {
       return value as ZeroHexString
     }
 
-    export function asOrThrow(value: unknown): ZeroHexString {
+    export function fromOrThrow(value: unknown): ZeroHexString {
       if (!is(value))
         throw new ZeroHexStringError(value)
       return value
     }
 
-    export function asOrNull(value: unknown): Nullable<ZeroHexString> {
+    export function fromOrNull(value: unknown): Nullable<ZeroHexString> {
       if (!is(value))
         return
       return value
@@ -105,13 +105,13 @@ export namespace ZeroHexString {
         return value as ZeroHexString<N>
       }
 
-      export function asOrThrow<N extends number>(value: unknown, byteLength: N): ZeroHexString<N> {
+      export function fromOrThrow<N extends number>(value: unknown, byteLength: N): ZeroHexString<N> {
         if (!is(value, byteLength))
           throw new ZeroHexStringError(value)
         return value as ZeroHexString<N>
       }
 
-      export function asOrNull<N extends number>(value: unknown, byteLength: N): Nullable<ZeroHexString<N>> {
+      export function fromOrNull<N extends number>(value: unknown, byteLength: N): Nullable<ZeroHexString<N>> {
         if (!is(value, byteLength))
           return
         return value as ZeroHexString<N>

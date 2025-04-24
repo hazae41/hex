@@ -34,13 +34,13 @@ export namespace RawHexString {
       return value as RawHexString
     }
 
-    export function asOrThrow(value: string): RawHexString {
+    export function fromOrThrow(value: string): RawHexString {
       if (!is(value))
         throw new RawHexStringError(value)
       return value
     }
 
-    export function asOrNull(value: string): Nullable<RawHexString> {
+    export function fromOrNull(value: string): Nullable<RawHexString> {
       if (!is(value))
         return
       return value
@@ -56,13 +56,13 @@ export namespace RawHexString {
         return value as RawHexString<N>
       }
 
-      export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
+      export function fromOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
         if (!is(value, byteLength))
           throw new RawHexStringError(value)
         return value as RawHexString<N>
       }
 
-      export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
+      export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
         if (!is(value, byteLength))
           return
         return value as RawHexString<N>
@@ -82,13 +82,13 @@ export namespace RawHexString {
       return value as RawHexString
     }
 
-    export function asOrThrow(value: unknown): RawHexString {
+    export function fromOrThrow(value: unknown): RawHexString {
       if (!is(value))
         throw new RawHexStringError(value)
       return value
     }
 
-    export function asOrNull(value: unknown): Nullable<RawHexString> {
+    export function fromOrNull(value: unknown): Nullable<RawHexString> {
       if (!is(value))
         return
       return value
@@ -104,13 +104,13 @@ export namespace RawHexString {
         return value as RawHexString<N>
       }
 
-      export function asOrThrow<N extends number>(value: unknown, byteLength: N): RawHexString<N> {
+      export function fromOrThrow<N extends number>(value: unknown, byteLength: N): RawHexString<N> {
         if (!is(value, byteLength))
           throw new RawHexStringError(value)
         return value as RawHexString<N>
       }
 
-      export function asOrNull<N extends number>(value: unknown, byteLength: N): Nullable<RawHexString<N>> {
+      export function fromOrNull<N extends number>(value: unknown, byteLength: N): Nullable<RawHexString<N>> {
         if (!is(value, byteLength))
           return
         return value as RawHexString<N>
