@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@hazae41/hex",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hexadecimal string types",
   "homepage": "https://github.com/hazae41/hex",
   "repository": "github:hazae41/hex",
