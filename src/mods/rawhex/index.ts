@@ -28,98 +28,47 @@ export namespace RawHexString {
 
   export type Unsafe = string
 
-  export namespace String {
 
-    export function as(value: string) {
-      return value as RawHexString
-    }
-
-    export function fromOrThrow(value: string): RawHexString {
-      if (!is(value))
-        throw new RawHexStringError(value)
-      return value
-    }
-
-    export function fromOrNull(value: string): Nullable<RawHexString> {
-      if (!is(value))
-        return
-      return value
-    }
-
-    export function is(value: string): value is RawHexString {
-      return /^[0-9a-fA-F]*$/.test(value)
-    }
-
-    export namespace Length {
-
-      export function as<N extends number>(value: string): RawHexString<N> {
-        return value as RawHexString<N>
-      }
-
-      export function fromOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
-        if (!is(value, byteLength))
-          throw new RawHexStringError(value)
-        return value as RawHexString<N>
-      }
-
-      export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
-        if (!is(value, byteLength))
-          return
-        return value as RawHexString<N>
-      }
-
-      export function is<N extends number>(value: string, byteLength: N): value is RawHexString<N> {
-        return value.length === (byteLength * 2) && /^[0-9a-fA-F]*$/.test(value)
-      }
-
-    }
-
+  export function as(value: string) {
+    return value as RawHexString
   }
 
-  export namespace Unknown {
+  export function is(value: string): value is RawHexString {
+    return /^[0-9a-fA-F]*$/.test(value)
+  }
 
-    export function as(value: unknown) {
-      return value as RawHexString
+  export function fromOrThrow(value: string): RawHexString {
+    if (!is(value))
+      throw new RawHexStringError(value)
+    return value
+  }
+
+  export function fromOrNull(value: string): Nullable<RawHexString> {
+    if (!is(value))
+      return
+    return value
+  }
+
+  export namespace Length {
+
+    export function as<N extends number>(value: string): RawHexString<N> {
+      return value as RawHexString<N>
     }
 
-    export function fromOrThrow(value: unknown): RawHexString {
-      if (!is(value))
+    export function is<N extends number>(value: string, byteLength: N): value is RawHexString<N> {
+      return value.length === (byteLength * 2) && /^[0-9a-fA-F]*$/.test(value)
+    }
+
+    export function fromOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
+      if (!is(value, byteLength))
         throw new RawHexStringError(value)
-      return value
+      return value as RawHexString<N>
     }
 
-    export function fromOrNull(value: unknown): Nullable<RawHexString> {
-      if (!is(value))
+    export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
+      if (!is(value, byteLength))
         return
-      return value
-    }
-
-    export function is(value: unknown): value is RawHexString {
-      return typeof value === "string" && /^[0-9a-fA-F]*$/.test(value)
-    }
-
-    export namespace Length {
-
-      export function as<N extends number>(value: unknown): RawHexString<N> {
-        return value as RawHexString<N>
-      }
-
-      export function fromOrThrow<N extends number>(value: unknown, byteLength: N): RawHexString<N> {
-        if (!is(value, byteLength))
-          throw new RawHexStringError(value)
-        return value as RawHexString<N>
-      }
-
-      export function fromOrNull<N extends number>(value: unknown, byteLength: N): Nullable<RawHexString<N>> {
-        if (!is(value, byteLength))
-          return
-        return value as RawHexString<N>
-      }
-
-      export function is<N extends number>(value: unknown, byteLength: N): value is RawHexString<N> {
-        return typeof value === "string" && value.length === (byteLength * 2) && /^[0-9a-fA-F]*$/.test(value)
-      }
-
+      return value as RawHexString<N>
     }
 
   }
