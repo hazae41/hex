@@ -3,10 +3,10 @@
 Hexadecimal string types
 
 ```bash
-npm i @hazae41/hex
+npm i @hazae41/hexane
 ```
 
-[**Node Package 📦**](https://www.npmjs.com/package/@hazae41/hex)
+[**Node Package 📦**](https://www.npmjs.com/package/@hazae41/hexane)
 
 ## Features
 
@@ -22,7 +22,7 @@ function recover(signature: ZeroHexString<32>) {
 }
 
 const raw = prompt("Enter your signature as zero-hex")
-const hex = ZeroHexString.String.Length.fromOrThrow(raw, 32)
+const hex = ZeroHexString.String.Length.asOrThrow(raw, 32)
 
 recover(hex)
 ```

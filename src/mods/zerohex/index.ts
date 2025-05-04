@@ -30,45 +30,53 @@ export namespace ZeroHexString {
 
   export type Unsafe = `0x${string}`
 
-  export function as(value: string) {
-    return value as ZeroHexString
-  }
-
   export function is(value: string): value is ZeroHexString {
     return /^0x[0-9a-fA-F]*$/.test(value)
   }
 
-  export function fromOrThrow(value: string): ZeroHexString {
-    if (!is(value))
-      throw new ZeroHexStringError(value)
-    return value
+  export function as(value: string) {
+    return value as ZeroHexString
   }
 
-  export function fromOrNull(value: string): Nullable<ZeroHexString> {
+  export function asOrNull(value: string): Nullable<ZeroHexString> {
     if (!is(value))
       return
     return value
   }
 
-  export namespace Length {
+  export function asOrThrow(value: string): ZeroHexString
 
-    export function as<N extends number>(value: string) {
-      return value as ZeroHexString<N>
-    }
+  export function asOrThrow(value: Unsafe): ZeroHexString
+
+  export function asOrThrow(value: string): ZeroHexString {
+    if (!is(value))
+      throw new ZeroHexStringError(value)
+    return value
+  }
+
+  export namespace Length {
 
     export function is<N extends number>(value: string, byteLength: N): value is ZeroHexString<N> {
       return value.length === (2 + (byteLength * 2)) && /^0x[0-9a-fA-F]*$/.test(value)
     }
 
-    export function fromOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
+    export function as<N extends number>(value: string) {
+      return value as ZeroHexString<N>
+    }
+
+    export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<ZeroHexString<N>> {
       if (!is(value, byteLength))
-        throw new ZeroHexStringError(value)
+        return
       return value
     }
 
-    export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<ZeroHexString<N>> {
+    export function asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N>
+
+    export function asOrThrow<N extends number>(value: Unsafe, byteLength: N): ZeroHexString<N>
+
+    export function asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
       if (!is(value, byteLength))
-        return
+        throw new ZeroHexStringError(value)
       return value
     }
 

@@ -28,47 +28,54 @@ export namespace RawHexString {
 
   export type Unsafe = string
 
+  export function is(value: string): value is RawHexString {
+    return /^[0-9a-fA-F]*$/.test(value)
+  }
 
   export function as(value: string) {
     return value as RawHexString
   }
 
-  export function is(value: string): value is RawHexString {
-    return /^[0-9a-fA-F]*$/.test(value)
-  }
-
-  export function fromOrThrow(value: string): RawHexString {
-    if (!is(value))
-      throw new RawHexStringError(value)
-    return value
-  }
-
-  export function fromOrNull(value: string): Nullable<RawHexString> {
+  export function asOrNull(value: string): Nullable<RawHexString> {
     if (!is(value))
       return
     return value
   }
 
-  export namespace Length {
+  export function asOrThrow(value: string): RawHexString
 
-    export function as<N extends number>(value: string): RawHexString<N> {
-      return value as RawHexString<N>
-    }
+  export function asOrThrow(value: string): RawHexString
+
+  export function asOrThrow(value: string): RawHexString {
+    if (!is(value))
+      throw new RawHexStringError(value)
+    return value
+  }
+
+  export namespace Length {
 
     export function is<N extends number>(value: string, byteLength: N): value is RawHexString<N> {
       return value.length === (byteLength * 2) && /^[0-9a-fA-F]*$/.test(value)
     }
 
-    export function fromOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
-      if (!is(value, byteLength))
-        throw new RawHexStringError(value)
+    export function as<N extends number>(value: string): RawHexString<N> {
       return value as RawHexString<N>
     }
 
-    export function fromOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
+    export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
       if (!is(value, byteLength))
         return
-      return value as RawHexString<N>
+      return value
+    }
+
+    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
+
+    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
+
+    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
+      if (!is(value, byteLength))
+        throw new RawHexStringError(value)
+      return value
     }
 
   }

@@ -1,10 +1,10 @@
 {
   "type": "module",
-  "name": "@hazae41/hex",
+  "name": "@hazae41/hexane",
   "version": "1.0.3",
   "description": "Hexadecimal string types",
-  "homepage": "https://github.com/hazae41/hex",
-  "repository": "github:hazae41/hex",
+  "homepage": "https://github.com/hazae41/hexane",
+  "repository": "github:hazae41/hexane",
   "author": "hazae41",
   "license": "MIT",
   "main": "./dist/cjs/index.cjs",
