@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@hazae41/hexane",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Hexadecimal string types",
   "homepage": "https://github.com/hazae41/hexane",
   "repository": "github:hazae41/hexane",
