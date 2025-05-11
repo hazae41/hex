@@ -2,6 +2,14 @@ import { $error } from "@hazae41/gardien"
 import { Radixable } from "libs/radixable/index.js"
 import { ZeroHexString } from "mods/zerohex/index.js"
 
+export function $rawx(message?: string) {
+  return $error(RawHexString, message)
+}
+
+export function $rawxn<N extends number>(byteLength: N, message?: string) {
+  return $error(new RawHexString.Length(byteLength), message)
+}
+
 export type RawHexSymbol = symbol & { readonly name: "RawHexSymbol" }
 
 export type RawHexString<N extends number = number> = number extends N
@@ -94,12 +102,4 @@ export namespace RawHexString {
     return value.length === 0 ? 0 : Number(toZeroHex(value))
   }
 
-}
-
-export function $rawx(message?: string) {
-  return $error(RawHexString, message)
-}
-
-export function $rawxn<N extends number>(byteLength: N, message?: string) {
-  return $error(new RawHexString.Length(byteLength), message)
 }
