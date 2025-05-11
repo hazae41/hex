@@ -10,18 +10,6 @@ declare global {
 
 }
 
-export class ZeroHexStringError extends Error {
-  readonly #class = ZeroHexStringError
-  readonly name = this.#class.name
-
-  constructor(
-    readonly value: unknown
-  ) {
-    super()
-  }
-
-}
-
 export type ZeroHexString<N extends number = number> = number extends N
   ? `0x${string}` & { readonly [Symbol.isZeroHex]: true }
   : `0x${string}` & { readonly [Symbol.isZeroHex]: true } & { readonly byteLength: N }
@@ -40,7 +28,7 @@ export namespace ZeroHexString {
 
   export function asOrThrow(value: string): ZeroHexString {
     if (!is(value))
-      throw new ZeroHexStringError(value)
+      throw new Error()
     return value
   }
 
@@ -60,7 +48,7 @@ export namespace ZeroHexString {
 
     static asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
       if (!Length.is(value, byteLength))
-        throw new ZeroHexStringError(value)
+        throw new Error()
       return value
     }
 
@@ -70,7 +58,7 @@ export namespace ZeroHexString {
 
     asOrThrow(value: string): ZeroHexString<N> {
       if (!Length.is(value, this.byteLength))
-        throw new ZeroHexStringError(value)
+        throw new Error()
       return value
     }
 

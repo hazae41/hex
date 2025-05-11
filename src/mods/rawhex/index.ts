@@ -8,18 +8,6 @@ declare global {
   }
 }
 
-export class RawHexStringError extends Error {
-  readonly #class = RawHexStringError
-  readonly name = this.#class.name
-
-  constructor(
-    readonly value: unknown
-  ) {
-    super()
-  }
-
-}
-
 export type RawHexString<N extends number = number> = number extends N
   ? string & { readonly [Symbol.isRawHex]: true }
   : string & { readonly [Symbol.isRawHex]: true } & { readonly byteLength: N }
@@ -38,7 +26,7 @@ export namespace RawHexString {
 
   export function asOrThrow(value: string): RawHexString {
     if (!is(value))
-      throw new RawHexStringError(value)
+      throw new Error()
     return value
   }
 
@@ -58,7 +46,7 @@ export namespace RawHexString {
 
     static asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
       if (!Length.is(value, byteLength))
-        throw new RawHexStringError(value)
+        throw new Error()
       return value
     }
 
@@ -68,7 +56,7 @@ export namespace RawHexString {
 
     asOrThrow(value: string): RawHexString<N> {
       if (!Length.is<N>(value, this.byteLength))
-        throw new RawHexStringError(value)
+        throw new Error()
       return value
     }
 
