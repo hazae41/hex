@@ -2,15 +2,11 @@ import { $error, $inter, $string } from "@hazae41/gardien"
 import { Radixable } from "libs/radixable/index.js"
 import { ZeroHexString } from "mods/zerohex/index.js"
 
-declare global {
-  interface SymbolConstructor {
-    readonly isRawHex: symbol
-  }
-}
+declare const RawHexSymbol: unique symbol
 
 export type RawHexString<N extends number = number> = number extends N
-  ? string & { readonly [Symbol.isRawHex]: true }
-  : string & { readonly [Symbol.isRawHex]: true } & { readonly byteLength: N }
+  ? string & { readonly [RawHexSymbol]: true }
+  : string & { readonly [RawHexSymbol]: true } & { readonly byteLength: N }
 
 export namespace RawHexString {
 

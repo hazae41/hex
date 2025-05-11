@@ -44,6 +44,6 @@
     "unit-tested"
   ],
   "dependencies": {
-    "@hazae41/gardien": "^0.4.0"
+    "@hazae41/gardien": "^0.4.1"
   }
 }
