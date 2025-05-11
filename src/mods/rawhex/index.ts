@@ -1,4 +1,4 @@
-import { Nullable } from "libs/nullable/index.js"
+import { $error, $inter, $string } from "@hazae41/gardien"
 import { Radixable } from "libs/radixable/index.js"
 import { ZeroHexString } from "mods/zerohex/index.js"
 
@@ -32,16 +32,6 @@ export namespace RawHexString {
     return /^[0-9a-fA-F]*$/.test(value)
   }
 
-  export function as(value: string) {
-    return value as RawHexString
-  }
-
-  export function asOrNull(value: string): Nullable<RawHexString> {
-    if (!is(value))
-      return
-    return value
-  }
-
   export function asOrThrow(value: string): RawHexString
 
   export function asOrThrow(value: string): RawHexString
@@ -52,28 +42,32 @@ export namespace RawHexString {
     return value
   }
 
-  export namespace Length {
+  export class Length<N extends number> {
 
-    export function is<N extends number>(value: string, byteLength: N): value is RawHexString<N> {
+    constructor(
+      readonly byteLength: N
+    ) { }
+
+    static is<N extends number>(value: string, byteLength: N): value is RawHexString<N> {
       return value.length === (byteLength * 2) && /^[0-9a-fA-F]*$/.test(value)
     }
 
-    export function as<N extends number>(value: string): RawHexString<N> {
-      return value as RawHexString<N>
-    }
+    static asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
 
-    export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<RawHexString<N>> {
-      if (!is(value, byteLength))
-        return
+    static asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
+
+    static asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
+      if (!Length.is(value, byteLength))
+        throw new RawHexStringError(value)
       return value
     }
 
-    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
+    asOrThrow(value: string): RawHexString<N>
 
-    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N>
+    asOrThrow(value: string): RawHexString<N>
 
-    export function asOrThrow<N extends number>(value: string, byteLength: N): RawHexString<N> {
-      if (!is(value, byteLength))
+    asOrThrow(value: string): RawHexString<N> {
+      if (!Length.is<N>(value, this.byteLength))
         throw new RawHexStringError(value)
       return value
     }
@@ -118,3 +112,18 @@ export namespace RawHexString {
 
 }
 
+export function $rawx(message?: string) {
+  return $error(RawHexString, message)
+}
+
+export function $rawxs(message?: string) {
+  return $inter([$string(), $rawx()], message)
+}
+
+export function $rawxn<N extends number>(byteLength: N, message?: string) {
+  return $error(new RawHexString.Length(byteLength), message)
+}
+
+export function $rawxns<N extends number>(byteLength: N, message?: string) {
+  return $inter([$string(), $rawxn(byteLength)], message)
+}

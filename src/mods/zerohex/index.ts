@@ -1,4 +1,4 @@
-import { Nullable } from "libs/nullable/index.js"
+import { $error, $inter, $string } from "@hazae41/gardien"
 import { Radixable } from "libs/radixable/index.js"
 import { RawHexString } from "mods/rawhex/index.js"
 
@@ -34,16 +34,6 @@ export namespace ZeroHexString {
     return /^0x[0-9a-fA-F]*$/.test(value)
   }
 
-  export function as(value: string) {
-    return value as ZeroHexString
-  }
-
-  export function asOrNull(value: string): Nullable<ZeroHexString> {
-    if (!is(value))
-      return
-    return value
-  }
-
   export function asOrThrow(value: string): ZeroHexString
 
   export function asOrThrow(value: Unsafe): ZeroHexString
@@ -54,28 +44,32 @@ export namespace ZeroHexString {
     return value
   }
 
-  export namespace Length {
+  export class Length<N extends number> {
 
-    export function is<N extends number>(value: string, byteLength: N): value is ZeroHexString<N> {
+    constructor(
+      readonly byteLength: N
+    ) { }
+
+    static is<N extends number>(value: string, byteLength: N): value is ZeroHexString<N> {
       return value.length === (2 + (byteLength * 2)) && /^0x[0-9a-fA-F]*$/.test(value)
     }
 
-    export function as<N extends number>(value: string) {
-      return value as ZeroHexString<N>
-    }
+    static asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N>
 
-    export function asOrNull<N extends number>(value: string, byteLength: N): Nullable<ZeroHexString<N>> {
-      if (!is(value, byteLength))
-        return
+    static asOrThrow<N extends number>(value: Unsafe, byteLength: N): ZeroHexString<N>
+
+    static asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
+      if (!Length.is(value, byteLength))
+        throw new ZeroHexStringError(value)
       return value
     }
 
-    export function asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N>
+    asOrThrow(value: string): ZeroHexString<N>
 
-    export function asOrThrow<N extends number>(value: Unsafe, byteLength: N): ZeroHexString<N>
+    asOrThrow(value: Unsafe): ZeroHexString<N>
 
-    export function asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
-      if (!is(value, byteLength))
+    asOrThrow(value: string): ZeroHexString<N> {
+      if (!Length.is(value, this.byteLength))
         throw new ZeroHexStringError(value)
       return value
     }
@@ -118,4 +112,20 @@ export namespace ZeroHexString {
     return value.length === 2 ? 0 : Number(value)
   }
 
+}
+
+export function $zerox(message?: string) {
+  return $error(ZeroHexString, message)
+}
+
+export function $zeroxs(message?: string) {
+  return $inter([$string(), $zerox()], message)
+}
+
+export function $zeroxn<N extends number>(byteLength: N, message?: string) {
+  return $error(new ZeroHexString.Length(byteLength), message)
+}
+
+export function $zeroxns<N extends number>(byteLength: N, message?: string) {
+  return $inter([$string(), $zeroxn(byteLength)], message)
 }
