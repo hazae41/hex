@@ -1,4 +1,4 @@
-import { $error, $inter, $string } from "@hazae41/gardien"
+import { $error } from "@hazae41/gardien"
 import { Radixable } from "libs/radixable/index.js"
 import { ZeroHexString } from "mods/zerohex/index.js"
 
@@ -100,14 +100,6 @@ export function $rawx(message?: string) {
   return $error(RawHexString, message)
 }
 
-export function $rawxs(message?: string) {
-  return $inter([$string(), $rawx()], message)
-}
-
 export function $rawxn<N extends number>(byteLength: N, message?: string) {
   return $error(new RawHexString.Length(byteLength), message)
-}
-
-export function $rawxns<N extends number>(byteLength: N, message?: string) {
-  return $inter([$string(), $rawxn(byteLength)], message)
 }
