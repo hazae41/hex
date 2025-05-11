@@ -18,15 +18,13 @@ export type ZeroHexString<N extends number = number> = number extends N
 
 export namespace ZeroHexString {
 
-  export type Unsafe = `0x${string}`
-
   export function is(value: string): value is ZeroHexString {
     return /^0x[0-9a-fA-F]*$/.test(value)
   }
 
   export function asOrThrow(value: string): ZeroHexString
 
-  export function asOrThrow(value: Unsafe): ZeroHexString
+  export function asOrThrow(value: `0x${string}`): ZeroHexString
 
   export function asOrThrow(value: string): ZeroHexString {
     if (!is(value))
@@ -46,7 +44,7 @@ export namespace ZeroHexString {
 
     static asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N>
 
-    static asOrThrow<N extends number>(value: Unsafe, byteLength: N): ZeroHexString<N>
+    static asOrThrow<N extends number>(value: `0x${string}`, byteLength: N): ZeroHexString<N>
 
     static asOrThrow<N extends number>(value: string, byteLength: N): ZeroHexString<N> {
       if (!Length.is(value, byteLength))
@@ -56,7 +54,7 @@ export namespace ZeroHexString {
 
     asOrThrow(value: string): ZeroHexString<N>
 
-    asOrThrow(value: Unsafe): ZeroHexString<N>
+    asOrThrow(value: `0x${string}`): ZeroHexString<N>
 
     asOrThrow(value: string): ZeroHexString<N> {
       if (!Length.is(value, this.byteLength))
